@@ -12,36 +12,60 @@ To practice event handling, such as clicks and keyboard inputs.
 
 ### Game rules
 
-- The game consists of **15 levels**.
-- Each level represents a round where the user must repeat **a sequence of keyboard symbols**.
-- The first round starts with **2 symbols**.
-- Each new round increases the sequence length by **one symbol**.
-- **A rounds counter** displays the current level.
+- The game consists of **5 rounds** and **3 levels of difficulty**.
+In each round, the user must repeat **a sequence of keyboard symbols** based on the level of difficulty.
+- The levels of difficulty are:
+    - **Easy**: only numbers;
+    - **Medium**: only letters;
+    - **Hard**: letters and numbers.
+- **No special symbols are allowed** in the sequence.
+- The first round starts with **2 symbols** based on the level of difficulty.
+- Each new round increases the sequence length by **two symbols**.
+- **A rounds counter** displays the current round.
+- There is always an **indicator of the current level of difficulty**.
 - The user can use both **virtual** _(by clicking letter keys on the screen)_ and **physical** keyboards _(by pressing letter keys on their keyboard)_ to play the game.
 
-- The initial game screen displays a virtual keyboard and the "Start" button.
-- To start the first level, the user clicks the “Start” button. 
-- When the first round begins, the “Start” button is replaced by the “Repeat the sequence” button.
+##### Initial game screen
+
+- The initial game screen displays:
+    - The “Start” button.
+    - An option to choose the level of difficulty (e.g., a switcher, a drop-down menu, etc.). If the user hasn’t played the game before, the “Easy” level is preselected by default.
+    - A virtual keyboard with only the symbols based on the preselected level of difficulty. The symbols can be displayed in a random order and shape (there is no need to reproduce the look and feel of a real keyboard).
+- If the user changes the level of difficulty, the virtual keyboard is updated accordingly.
+
+##### Starting the game
+
+- To start the first round, the user clicks the “Start” button. 
+- After clicking the "Start" button, it is not possible to change the level of difficulty.
+- When the first round begins, the “Start” button disappears and is replaced by the “Repeat the sequence” and “New game” buttons.
 - Only after clicking the “Start” button is the first sequence shown by simulating the typing of the corresponding symbols on the virtual keyboard. The typing simulation should be clear: the symbols are “typed” one after another, and the corresponding keys are highlighted.
-- The “Repeat the sequence” button is disabled while the current sequence is being reproduced.
-- The user can click the “Repeat the Sequence” button **only once**. After that, the “Repeat the sequence” button is replaced by the “Start over” button.
-- When answering by clicking the keys on the virtual keyboard, these keys should be highlighted upon clicking.
-- When answering by pressing keys on the physical keyboard, the corresponding keys on the virtual keyboard should be highlighted upon pressing.
-- The user is allowed only **one incorrect answer per round**. After a second incorrect attempt, the “Repeat the sequence” button, if still present, is replaced by the “Start over” button.
-- The user can click the “Start over” button to restart the game from the first round. In this case, the “Start over” button is replaced by the “Start” button, and the rounds counter is reset accordingly.
+- The user can click the “Repeat the sequence” button **only once per round**. After that, the “Repeat the sequence” button becomes disabled until the next round.
+- After clicking the “Repeat the sequence” button, the sequence is reproduced one more time.
+- No user input (clicking or pressing keys) is allowed during the typing simulation, and all buttons are disabled.
+- Once the typing simulation is finished, the buttons are enabled and user input is allowed. If the user has already clicked the “Repeat the sequence” button, this button remains disabled.
+
+##### User interaction
+
+- When answering by clicking the keys on the virtual keyboard, these keys are highlighted upon clicking.
+- When answering by pressing keys on the physical keyboard, the corresponding keys on the virtual keyboard are highlighted upon pressing.
+- The user is allowed only **one incorrect attempt per round**. After a second incorrect attempt, the “Repeat the sequence” button, if still enabled, becomes disabled.
+- At any moment, the user can click the “New game” button to restart the game from the **initial game screen** (except during the typing simulation).
+
+##### Feedback and Progression
+
 - Feedback is provided after an incorrect answer. This can be implemented by displaying a message, a sound, or a visual cue.
-- When the user answers correctly, the “Repeat the sequence” button (or, if already clicked, the “Start over” button) is replaced by the “Next” button.
+- When the user answers correctly, the “Repeat the sequence” button is replaced by the “Next” button.
 - Feedback is provided after a correct answer. This can be implemented by displaying a message, a sound, or a visual cue.
-- After clicking the “Next” button, the new level starts by reproducing the next sequence, and the rounds counter is updated accordingly.
-- Upon successfully completing the 15th round, feedback is provided (through a message, sound, or visual cue) to indicate that the game is over, and the “Repeat the sequence” button (or, if already clicked, the “Start over” button) is replaced by the “Play again” button.
-- After clicking the “Play Again” button, the game restarts from the first round, and the rounds counter is reset.
+- After clicking the “Next” button, the new round starts by reproducing the next sequence, and the rounds counter is updated accordingly.
+- Upon successfully completing the 5th round, feedback is provided (through a message, sound, or visual cue) to indicate that the game is over, and the “Repeat the sequence” button, if still enabled, becomes disabled.
+- The user can play again by clicking the “New game” button, which restarts the game from the **initial game screen**. The preselected level of difficulty should be the same as in the last game (e.g., if the last choice was “Medium”, this option is preselected by default).
 
 ### Main functional requirements
 
 - Initially, `body` in the index.html file should be empty (only script tag is allowed).
-- All necessary elements are generated using `createElement()` function. No `html` injection is allowed.
-- The design should be **adaptive (or responsive)** from _(500px <= width)_.
-- The sequence is randomly generated for each new round.
+- All necessary elements must be generated using `createElement()` function. No `html` injection is allowed.
+- The design is **adaptive (or responsive)**, that includes desktop(1440px <= width), tablet(768px <= width < 1440px) and mobile(360px <= width < 768px). When switching between versions everything must be displayed correctly, all functionality must be present, no content must disappear or be left beyond the screen.
+- The sequence is **randomly generated** for each new round.
 - The design is at your discretion.
 - The application should be done **in English**.
 
@@ -65,7 +89,6 @@ To practice event handling, such as clicks and keyboard inputs.
 
 - The application is checked in the latest version of Google Chrome browser.
 - It is **not allowed** to use:
-  - CSS frameworks (e.g., `Bootstrap`),
   - JS frameworks (e.g., `Angular`, `React`, `Vue`, etc.),
   - Outdated libraries (e.g. `JQuery`, etc.),
   - Any JS libraries which are not devDependencies (e.g. `lodash`),
@@ -74,10 +97,36 @@ To practice event handling, such as clicks and keyboard inputs.
 - JS code **must not be minified** to facilitate the cross-check process.
 - It is strongly recommended to use `eslint` and `prettier`.
 
-## CrossCheck Criteria 
+## CrossCheck Criteria (150 points)
 _It is recommended to print the right answer for each round in the browser's console to facilitate the cross-check process._
 
+- [ ] Responsive/adaptive UI from 1440px to 360px viewport: `+10`
+- [ ] The generation of DOM elements is implemented. `body` in the `index.html` is empty (can contain only `script` tag). _This requirement can be checked by pressing `Ctrl+U` (Windows) or `Option(⌥)+Command(⌘)+U` (Mac)_: `+20`
+- [ ] The three difficulty levels are implemented correctly and the virtual keyboard updates accordingly when the difficulty is changed: `+10`
+- [ ] Clicking the “Start” button initiates the first round with a sequence of 2 symbols and disables the ability to change the difficulty after starting the game: `+5`
+- [ ] The sequence is accurately simulated by highlighting corresponding keys on the virtual keyboard: `+10`
+- [ ] While the sequence is being displayed through the typing simulation, no user input (clicking or pressing keys) is possible, and all buttons are disabled: `+5`
+- The “Repeat the Sequence” button:
+	-	[ ] can be clicked only once per round: `+5`
+    -	[ ] reproduces the current sequence when clicked: `+5`
+	-	[ ] becomes disabled after a single use: `+5`
+- [ ] The "New game" button is always accessible (except during the typing simulation), allowing the user to restart the game from the initial game screen at any moment: `+5`
+- [ ] The rounds counter accurately displays the current round number and updates it after each successful round completion: `+5`
+- [ ] The current level of difficulty is always clearly shown on the game screen: `+5`
+- [ ] The user can play the game by using the virtual keyboard, and the corresponding keys are highlighted upon clicking: `+20`
+- [ ] The user can play the game by using the physical keyboard, and the corresponding virtual keys are highlighted upon pressing: `+20`
+- [ ] Only one incorrect attempt per round is allowed, and after a second incorrect attempt, the “Repeat the Sequence” button becomes disabled if it was not already: `+5`
+- [ ] There is clear feedback after each answer, whether correct or incorrect, through messages, sounds, or visual cues: `+5`
+- [ ] Upon a correct answer, the “Repeat the Sequence” button is replaced with a “Next” button to proceed to the following round: `+5`
+- [ ] Clicking the “Next” button starts the next round with an increased sequence length: `+5`
+- [ ] After successfully completing the 5th round, there is final feedback indicating the game is over and the “Repeat the sequence” button is disabled (if it’s still enabled): `+5`
+- [ ] The user’s last chosen difficulty level is saved and preselected by default when the user starts a new game: `+5`
+
 ## Penalties
+- Anything mentioned as **not allowed** in the 'Technical requirements' section is used: `-150`
+- `body` in the index.html file is not empty: `-150`
+- Not all elements elements are generated using `createElement()` function or JS code is minified, not allowing to check this requirement: `-150`
+- The sequence is not **randomly generated** for each new round: `-50`
 
 ## Useful links:
 
