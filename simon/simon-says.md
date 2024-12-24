@@ -4,7 +4,7 @@
 
 ### Description
 
-The task is a variant of the classical [Simon Says](https://en.wikipedia.org/wiki/Simon_says) game, where players must remember and reproduce sequences of keyboard symbols.
+The task is a variant of the classical [Simon Says](https://en.wikipedia.org/wiki/Simon_says) game, where players must remember and reproduce sequences of keyboard symbols. In this task, ‘symbols’ refer **only to letters and numbers**.
 
 ### Task objective
 
@@ -12,13 +12,12 @@ To practice event handling, such as clicks and keyboard inputs.
 
 ### Game rules
 
-- The game consists of **5 rounds** and **3 levels of difficulty**.
-In each round, the user must repeat **a sequence of keyboard symbols** based on the level of difficulty.
+- The game consists of **5 rounds** and **3 levels of difficulty**. In each round, the user must repeat **a sequence of keyboard symbols** based on the level of difficulty. 
 - The levels of difficulty are:
     - **Easy**: only numbers;
     - **Medium**: only letters;
     - **Hard**: letters and numbers.
-- **No special symbols are allowed** in the sequence.
+- **No special symbols or special characters are allowed** in the sequence.
 - The first round starts with **2 symbols** based on the level of difficulty.
 - Each new round increases the sequence length by **two symbols**.
 - **A rounds counter** displays the current round.
@@ -53,9 +52,8 @@ In each round, the user must repeat **a sequence of keyboard symbols** based on 
 
 ##### Feedback and Progression
 
-- Feedback is provided after an incorrect answer. This can be implemented by displaying a message, a sound, or a visual cue.
+- Clear feedback is provided after each answer, whether correct or incorrect. This can be implemented through a message, sound, or visual cue. Feedback for an incorrect answer should appear immediately after the first incorrectly clicked or pressed key, while feedback for a correct answer should only be displayed after the entire sequence has been repeated correctly.
 - When the user answers correctly, the “Repeat the sequence” button is replaced by the “Next” button.
-- Feedback is provided after a correct answer. This can be implemented by displaying a message, a sound, or a visual cue.
 - After clicking the “Next” button, the new round starts by reproducing the next sequence, and the rounds counter is updated accordingly.
 - Upon successfully completing the 5th round, feedback is provided (through a message, sound, or visual cue) to indicate that the game is over, and the “Repeat the sequence” button, if still enabled, becomes disabled.
 - The user can play again by clicking the “New game” button, which restarts the game from the **initial game screen**. The preselected level of difficulty should be the same as in the last game (e.g., if the last choice was “Medium”, this option is preselected by default).
@@ -98,35 +96,37 @@ In each round, the user must repeat **a sequence of keyboard symbols** based on 
 - It is strongly recommended to use `eslint` and `prettier`.
 
 ## CrossCheck Criteria (150 points)
+
 _It is recommended to print the right answer for each round in the browser's console to facilitate the cross-check process._
 
-- [ ] Responsive/adaptive UI from 1440px to 360px viewport: `+10`
-- [ ] The generation of DOM elements is implemented. `body` in the `index.html` is empty (can contain only `script` tag). _This requirement can be checked by pressing `Ctrl+U` (Windows) or `Option(⌥)+Command(⌘)+U` (Mac)_: `+20`
-- [ ] The three difficulty levels are implemented correctly and the virtual keyboard updates accordingly when the difficulty is changed: `+10`
+- [ ] The three difficulty levels are implemented correctly and the virtual keyboard updates accordingly when the difficulty is changed on the initial game screen: `+10`
 - [ ] Clicking the “Start” button initiates the first round with a sequence of 2 symbols and disables the ability to change the difficulty after starting the game: `+5`
-- [ ] The sequence is accurately simulated by highlighting corresponding keys on the virtual keyboard: `+10`
+- [ ] The sequence is accurately simulated by clearly highlighting corresponding keys on the virtual keyboard: `+10`
 - [ ] While the sequence is being displayed through the typing simulation, no user input (clicking or pressing keys) is possible, and all buttons are disabled: `+5`
-- The “Repeat the Sequence” button:
-	-	[ ] can be clicked only once per round: `+5`
-    -	[ ] reproduces the current sequence when clicked: `+5`
-	-	[ ] becomes disabled after a single use: `+5`
-- [ ] The "New game" button is always accessible (except during the typing simulation), allowing the user to restart the game from the initial game screen at any moment: `+5`
-- [ ] The rounds counter accurately displays the current round number and updates it after each successful round completion: `+5`
-- [ ] The current level of difficulty is always clearly shown on the game screen: `+5`
+- The “Repeat the sequence” button:
+	-	[ ] can be clicked only once per round and becomes disabled after a single use: `+5`
+  -	[ ] reproduces the current sequence when clicked: `+5`
 - [ ] The user can play the game by using the virtual keyboard, and the corresponding keys are highlighted upon clicking: `+20`
 - [ ] The user can play the game by using the physical keyboard, and the corresponding virtual keys are highlighted upon pressing: `+20`
-- [ ] Only one incorrect attempt per round is allowed, and after a second incorrect attempt, the “Repeat the Sequence” button becomes disabled if it was not already: `+5`
-- [ ] There is clear feedback after each answer, whether correct or incorrect, through messages, sounds, or visual cues: `+5`
+- [ ] Only one incorrect attempt per round is allowed, and after a second incorrect attempt, the “Repeat the sequence” button becomes disabled (if it was not already): `+5`
+- [ ] The "New game" button is always accessible (except during the typing simulation), allowing the user to restart the game from the initial game screen at any moment: `+5`
+- [ ] There is clear feedback after each answer, whether correct or incorrect, through messages, sounds, or visual cues. Feedback for an incorrect answer appears immediately after the first incorrectly clicked or pressed key, while feedback for a correct answer is displayed after the entire sequence has been repeated correctly.: `+5`
 - [ ] Upon a correct answer, the “Repeat the Sequence” button is replaced with a “Next” button to proceed to the following round: `+5`
-- [ ] Clicking the “Next” button starts the next round with an increased sequence length: `+5`
-- [ ] After successfully completing the 5th round, there is final feedback indicating the game is over and the “Repeat the sequence” button is disabled (if it’s still enabled): `+5`
+- [ ] Clicking the “Next” button starts the next round with an increased sequence length (+ 2 symbols for each new round): `+5`
+- [ ] After successfully completing the 5th round, there is final feedback indicating the game is over and the “Repeat the sequence” button, if still enabled, becomes disabled: `+5`
 - [ ] The user’s last chosen difficulty level is saved and preselected by default when the user starts a new game: `+5`
+- [ ] The game includes 5 rounds, and the rounds counter accurately displays the current round number and updates it after each successful round completion: `+5`
+- [ ] Responsive/adaptive UI from 1440px to 360px viewport: `+10`
+- [ ] The generation of DOM elements is implemented. `body` in the `index.html` is empty (can contain only `script` tag). _This requirement can be checked by pressing `Ctrl+U` (Windows) or `Option(⌥)+Command(⌘)+U` (Mac)_: `+20`
 
 ## Penalties
+
+- The sequence includes **special symbols or special characters**: `-20`
+- The sequence is not **randomly generated** for each new round: `-50`
+- The application is not done **in English**: `-50`
 - Anything mentioned as **not allowed** in the 'Technical requirements' section is used: `-150`
 - `body` in the index.html file is not empty: `-150`
 - Not all elements elements are generated using `createElement()` function or JS code is minified, not allowing to check this requirement: `-150`
-- The sequence is not **randomly generated** for each new round: `-50`
 
 ## Useful links:
 
