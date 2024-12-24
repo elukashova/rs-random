@@ -103,9 +103,8 @@ _It is recommended to print the right answer for each round in the browser's con
 - [ ] Clicking the “Start” button initiates the first round with a sequence of 2 symbols and disables the ability to change the difficulty after starting the game: `+5`
 - [ ] The sequence is accurately simulated by clearly highlighting corresponding keys on the virtual keyboard: `+10`
 - [ ] While the sequence is being displayed through the typing simulation, no user input (clicking or pressing keys) is possible, and all buttons are disabled: `+5`
-- The “Repeat the sequence” button:
-	-	[ ] can be clicked only once per round and becomes disabled after a single use: `+5`
-  -	[ ] reproduces the current sequence when clicked: `+5`
+-	[ ] The “Repeat the sequence” button can be clicked only once per round and becomes disabled after a single use: `+5`
+-	[ ] The “Repeat the sequence” button reproduces the current sequence when clicked: `+5`
 - [ ] The user can play the game by using the virtual keyboard, and the corresponding keys are highlighted upon clicking: `+20`
 - [ ] The user can play the game by using the physical keyboard, and the corresponding virtual keys are highlighted upon pressing: `+20`
 - [ ] Only one incorrect attempt per round is allowed, and after a second incorrect attempt, the “Repeat the sequence” button becomes disabled (if it was not already): `+5`
