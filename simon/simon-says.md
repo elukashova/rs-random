@@ -22,7 +22,9 @@ To practice event handling, such as clicks and keyboard inputs.
 - Each new round increases the sequence length by **two symbols**.
 - **A rounds counter** displays the current round.
 - There is always an **indicator of the current level of difficulty**.
-- The user can use both **virtual** _(by clicking letter keys on the screen)_ and **physical** keyboards _(by pressing letter keys on their keyboard)_ to play the game.
+- The user can use both **virtual** _(by clicking keys on the screen)_ and **physical** keyboards _(by pressing keys on their keyboard)_ to play the game.
+- Handling NumPad events **is not required**.
+- Pressing keys with symbols that are not part of the current difficulty level **should be ignored** during the game.
 
 ##### Initial game screen
 
@@ -39,7 +41,7 @@ To practice event handling, such as clicks and keyboard inputs.
 - When the first round begins, the “Start” button disappears and is replaced by the “Repeat the sequence” and “New game” buttons.
 - Only after clicking the “Start” button is the first sequence shown by simulating the typing of the corresponding symbols on the virtual keyboard. The typing simulation should be clear: the symbols are “typed” one after another, and the corresponding keys are highlighted.
 - The user can click the “Repeat the sequence” button **only once per round**. After that, the “Repeat the sequence” button becomes disabled until the next round.
-- After clicking the “Repeat the sequence” button, the sequence is reproduced one more time.
+- After clicking the “Repeat the sequence” button, the sequence is reproduced one more time. If the user has already made an incorrect attempt in the current round, the round is reset. 
 - No user input (clicking or pressing keys) is allowed during the typing simulation, and all buttons are disabled.
 - Once the typing simulation is finished, the buttons are enabled and user input is allowed. If the user has already clicked the “Repeat the sequence” button, this button remains disabled.
 
@@ -47,25 +49,32 @@ To practice event handling, such as clicks and keyboard inputs.
 
 - When answering by clicking the keys on the virtual keyboard, these keys are highlighted upon clicking.
 - When answering by pressing keys on the physical keyboard, the corresponding keys on the virtual keyboard are highlighted upon pressing.
-- The user is allowed only **one incorrect attempt per round**. After a second incorrect attempt, the “Repeat the sequence” button, if still enabled, becomes disabled.
-- At any moment, the user can click the “New game” button to restart the game from the **initial game screen** (except during the typing simulation).
+- A correct answer is automatically recognized after the user presses **the last key in the sequence**. No additional submit action is required.
+- An incorrect answer is immediately detected upon the **first wrong key press** in the sequence.
+- The user is allowed only **one incorrect attempt per round**. After a second incorrect attempt, the game is considered over and the “Repeat the sequence” button, if still enabled, becomes disabled.
+- At any moment (except during the typing simulation), the user can click the “New game” button to restart the game from the **initial game screen** _(see "Initial game screen" section above)_. The preselected level of difficulty should be the same as in the last game (e.g., if the last choice was “Medium”, this option is preselected by default).
 
 ##### Feedback and Progression
 
 - Clear feedback is provided after each answer, whether correct or incorrect. This can be implemented through a message, sound, or visual cue. Feedback for an incorrect answer should appear immediately after the first incorrectly clicked or pressed key, while feedback for a correct answer should only be displayed after the entire sequence has been repeated correctly.
 - When the user answers correctly, the “Repeat the sequence” button is replaced by the “Next” button.
 - After clicking the “Next” button, the new round starts by reproducing the next sequence, and the rounds counter is updated accordingly.
+- The sequence is **randomly generated** for each new round according to the selected level of difficulty, meaning a **completely new** combination is created each time the user clicks the “Next” button. Adding two new symbols to the previous sequence **is not allowed**.
 - Upon successfully completing the 5th round, feedback is provided (through a message, sound, or visual cue) to indicate that the game is over, and the “Repeat the sequence” button, if still enabled, becomes disabled.
-- The user can play again by clicking the “New game” button, which restarts the game from the **initial game screen**. The preselected level of difficulty should be the same as in the last game (e.g., if the last choice was “Medium”, this option is preselected by default).
+- The user can play again by clicking the “New game” button, which restarts the game from the **initial game screen** _(see "Initial game screen" section above)_. The preselected level of difficulty should be the same as in the last game (e.g., if the last choice was “Medium”, this option is preselected by default).
 
 ### Main functional requirements
 
 - Initially, `body` in the index.html file should be empty (only script tag is allowed).
 - All necessary elements must be generated using `createElement()` function. No `html` injection is allowed.
 - The design is **adaptive (or responsive)**, that includes desktop(1440px <= width), tablet(768px <= width < 1440px) and mobile(360px <= width < 768px). When switching between versions everything must be displayed correctly, all functionality must be present, no content must disappear or be left beyond the screen.
+- The design is **at your discretion**.
 - The sequence is **randomly generated** for each new round.
-- The design is at your discretion.
+- Using `window.location.reload` to restart the game when it's over **is not allowed**.
+- The selected difficulty level persists only for the duration of the browser session. Saving it in the localStorage **is not required**.
 - The application should be done **in English**.
+- The use of `alert`, `prompt`, `confirm` **is prohibited**.
+- The app **must not have** unexpected errors in the console.
 
 ## Repository requirements
 
@@ -111,7 +120,7 @@ _It is recommended to print the right answer for each round in the browser's con
 - [ ] The "New game" button is always accessible (except during the typing simulation), allowing the user to restart the game from the initial game screen at any moment: `+5`
 - [ ] There is clear feedback after each answer, whether correct or incorrect, through messages, sounds, or visual cues. Feedback for an incorrect answer appears immediately after the first incorrectly clicked or pressed key, while feedback for a correct answer is displayed after the entire sequence has been repeated correctly.: `+5`
 - [ ] Upon a correct answer, the “Repeat the Sequence” button is replaced with a “Next” button to proceed to the following round: `+5`
-- [ ] Clicking the “Next” button starts the next round with an increased sequence length (+ 2 symbols for each new round): `+5`
+- [ ] Clicking the “Next” button starts the next round with a new, randomly generated sequence that is two symbols longer than the previous one: `+5`
 - [ ] After successfully completing the 5th round, there is final feedback indicating the game is over and the “Repeat the sequence” button, if still enabled, becomes disabled: `+5`
 - [ ] The user’s last chosen difficulty level is saved and preselected by default when the user starts a new game: `+5`
 - [ ] The game includes 5 rounds, and the rounds counter accurately displays the current round number and updates it after each successful round completion: `+5`
@@ -120,12 +129,15 @@ _It is recommended to print the right answer for each round in the browser's con
 
 ## Penalties
 
+- Unexpected errors in the console (the deduction is only allowed once for each distinct kind of error): `-10 per error`
 - The sequence includes **special symbols or special characters**: `-20`
 - The sequence is not **randomly generated** for each new round: `-50`
-- The application is not done **in English**: `-50`
+- The app is not supported at the requested width (desktop _1440px <= width_, tablet _768px <= width < 1440px_ and mobile _360px <= width < 768px_) (e.g., DOM elements overlap, disappear, etc.): `-50`
+- The application is not done **in English**: `-150`
 - Anything mentioned as **not allowed** in the 'Technical requirements' section is used: `-150`
 - `body` in the index.html file is not empty: `-150`
 - Not all elements elements are generated using `createElement()` function or JS code is minified, not allowing to check this requirement: `-150`
+- Using `alert`, `prompt`, `confirm`: `-150`
 
 ## Useful links:
 
