@@ -14,54 +14,62 @@ To practice event handling, such as clicks and keyboard inputs.
 
 - The game consists of **5 rounds** and **3 levels of difficulty**. In each round, the user must repeat **a sequence of keyboard symbols** based on the level of difficulty. 
 - The levels of difficulty are:
-    - **Easy**: only numbers;
-    - **Medium**: only letters;
-    - **Hard**: letters and numbers.
-- **No special symbols or special characters are allowed** in the sequence.
+    - **Easy**: only numbers (0-9);
+    - **Medium**: only letters (a-z);
+    - **Hard**: letters (a-z) and numbers (0-9).
+- The same symbol can be used **multiple times** in a sequence.
+- For the letters, both upper and lower case letters **are allowed** and are treated as **the same symbol** _(e.g. if the sequence has the letter "a", it is also possible to type "A")_.
 - The first round starts with **2 symbols** based on the level of difficulty.
-- Each new round increases the sequence length by **two symbols**.
-- **A rounds counter** displays the current round.
-- There is always an **indicator of the current level of difficulty**.
+- Each new round provides a new **randomly generated** sequence, increasing the sequence length by **two symbols**.
 - The user can use both **virtual** _(by clicking keys on the screen)_ and **physical** keyboards _(by pressing keys on their keyboard)_ to play the game.
-- Handling NumPad events **is not required**.
-- Pressing keys with symbols that are not part of the current difficulty level **should be ignored** during the game.
+- Handling NumPad events **is not required**. NumPad inputs can be ignored during the game.
+- Pressing keys with symbols that are not part of the current difficulty level **must be ignored** during the game _(e.g. for the "Medium" level, pressing any not a-z key must be ignored)_.
 
 ##### Initial game screen
 
 - The initial game screen displays:
     - The “Start” button.
     - An option to choose the level of difficulty (e.g., a switcher, a drop-down menu, etc.). If the user hasn’t played the game before, the “Easy” level is preselected by default.
-    - A virtual keyboard with only the symbols based on the preselected level of difficulty. The symbols can be displayed in a random order and shape (there is no need to reproduce the look and feel of a real keyboard).
+    - A virtual keyboard displaying only the symbols corresponding to the selected difficulty level: numbers 0-9 for the “Easy” level, letters A-Z for the “Medium” level, and both numbers and letters for the “Hard” level. The symbols can be arranged in a random order and layout (there is no need to reproduce the look and feel of a real keyboard). 
 - If the user changes the level of difficulty, the virtual keyboard is updated accordingly.
 
 ##### Starting the game
 
-- To start the first round, the user clicks the “Start” button. 
-- After clicking the "Start" button, it is not possible to change the level of difficulty.
+- To start the first round, the user clicks the “Start” button.
+- After clicking the "Start" button:
+    - It is not possible to change the level of difficulty.
+    - An indicator of the current level of difficulty is always visible on the game screen.
+    - There is a rounds counter that displays the current round number.
 - When the first round begins, the “Start” button disappears and is replaced by the “Repeat the sequence” and “New game” buttons.
 - Only after clicking the “Start” button is the first sequence shown by simulating the typing of the corresponding symbols on the virtual keyboard. The typing simulation should be clear: the symbols are “typed” one after another, and the corresponding keys are highlighted.
-- The user can click the “Repeat the sequence” button **only once per round**. After that, the “Repeat the sequence” button becomes disabled until the next round.
-- After clicking the “Repeat the sequence” button, the sequence is reproduced one more time. If the user has already made an incorrect attempt in the current round, the round is reset. 
+- The user can click the “Repeat the sequence” button **only once per round**. After that, the “Repeat the sequence” button becomes disabled until the next round (if the user successfully completes the current round).
+- After clicking the “Repeat the Sequence” button:
+    - The same sequence is reproduced one more time. 
+    - If the user has already made an incorrect attempt in the current round, the round is reset by clearing the feedback about the incorrect attempt. 
+    - If the user has already started to give a correct answer without finishing it, the round is reset by "removing" the information about inserted symbols, so that the user can start typing the sequence again from its beginning.
 - No user input (clicking or pressing keys) is allowed during the typing simulation, and all buttons are disabled.
 - Once the typing simulation is finished, the buttons are enabled and user input is allowed. If the user has already clicked the “Repeat the sequence” button, this button remains disabled.
 
 ##### User interaction
 
-- When answering by clicking the keys on the virtual keyboard, these keys are highlighted upon clicking.
-- When answering by pressing keys on the physical keyboard, the corresponding keys on the virtual keyboard are highlighted upon pressing.
+- When the user answers by clicking keys on the virtual keyboard, the clicked keys are momentarily highlighted upon clicking to provide visual feedback.
+- When answering by pressing keys on the physical keyboard, the corresponding keys on the virtual keyboard are briefly highlighted upon pressing to provide visual feedback.
 - A correct answer is automatically recognized after the user presses **the last key in the sequence**. No additional submit action is required.
 - An incorrect answer is immediately detected upon the **first wrong key press** in the sequence.
-- The user is allowed only **one incorrect attempt per round**. After a second incorrect attempt, the game is considered over and the “Repeat the sequence” button, if still enabled, becomes disabled.
-- At any moment (except during the typing simulation), the user can click the “New game” button to restart the game from the **initial game screen** _(see "Initial game screen" section above)_. The preselected level of difficulty should be the same as in the last game (e.g., if the last choice was “Medium”, this option is preselected by default).
+- The user is allowed only **one incorrect attempt per round**. After a second incorrect attempt in the same round, the game is considered over and the “Repeat the sequence” button, if still enabled, becomes disabled.
+The user is allowed only one incorrect attempt per round. 
+- At any moment (except during the typing simulation), the user can click the “New game” button to restart the game from the **initial game screen** _(see "Initial game screen" section above for details)_. The preselected level of difficulty will remain the same as in the last game (e.g., if the last choice was “Medium”, this option is preselected by default).
 
 ##### Feedback and Progression
 
-- Clear feedback is provided after each answer, whether correct or incorrect. This can be implemented through a message, sound, or visual cue. Feedback for an incorrect answer should appear immediately after the first incorrectly clicked or pressed key, while feedback for a correct answer should only be displayed after the entire sequence has been repeated correctly.
-- When the user answers correctly, the “Repeat the sequence” button is replaced by the “Next” button.
-- After clicking the “Next” button, the new round starts by reproducing the next sequence, and the rounds counter is updated accordingly.
-- The sequence is **randomly generated** for each new round according to the selected level of difficulty, meaning a **completely new** combination is created each time the user clicks the “Next” button. Adding two new symbols to the previous sequence **is not allowed**.
+- Clear feedback is provided after each answer, whether correct or incorrect. This can be implemented through a message, sound, or visual cue. 
+- Feedback for an incorrect answer should appear immediately after the first incorrectly clicked or pressed key, while feedback for a correct answer should only be displayed after the entire sequence has been repeated correctly.
+- Any feedback should disappear from the screen as soon as the user interacts with the game (e.g., by clicking the “Next” button, pressing/clicking any key on the virtual keyboard, etc).
+- When the user answers correctly, the “Repeat the sequence” button is immediately replaced by the “Next” button, allowing the user to proceed to the following round.
+- After clicking the “Next” button, the new round starts by immediately reproducing the next sequence, and the rounds counter is updated accordingly.
+- The sequence is **randomly generated** for each new round according to the selected level of difficulty, meaning a **completely new** combination is created each time the user clicks the “Next” button. The sequence length increases by two symbols each round without simply appending new symbols to the previous sequence. Just adding two new symbols to the previous sequence **is not allowed**.
 - Upon successfully completing the 5th round, feedback is provided (through a message, sound, or visual cue) to indicate that the game is over, and the “Repeat the sequence” button, if still enabled, becomes disabled.
-- The user can play again by clicking the “New game” button, which restarts the game from the **initial game screen** _(see "Initial game screen" section above)_. The preselected level of difficulty should be the same as in the last game (e.g., if the last choice was “Medium”, this option is preselected by default).
+- The user can play again by clicking the “New game” button, which restarts the game from the **initial game screen** _(see "Initial game screen" section above for details)_. The preselected level of difficulty should be the same as in the last game (e.g., if the last choice was “Medium”, this option is preselected by default).
 
 ### Main functional requirements
 
